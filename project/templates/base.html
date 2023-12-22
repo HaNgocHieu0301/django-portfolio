@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+{% load static tailwind_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="{% static 'test/mystyle.css' %}">
+    {% tailwind_css %}
+</head>
+<body>
+    <div class="h-1/2 lg:h-screen bg-gradient-to-r from-[#984d38] from-[-30.3%] to-[#181E41] to-[58.12%]">
+        <div style="padding: 0 5% 0 10%">
+        <nav style="padding-bottom: 20px">
+          <div class="mx-auto max-w-7xl px-2 md:px-6 lg:px-8">
+            <div class="w-full flex h-12 md:h-16 items-center justify-between">
+              <!-- Mobile menu button-->
+              <div class="flex items-center md:hidden">
+                <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:gray-400" aria-controls="mobile-menu" aria-expanded="false">
+                  <span class="absolute -inset-0.5"></span>
+                  <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  </svg>
+                  <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex flex-shrink-0 items-center">
+                <a class="flex flex-row justify-center items-center gap-2 rounded-full text-sm bold text-white">
+                    <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <span>Ha Ngoc Hieu</span>
+                </a>
+              </div>
+              <div class="w-full hidden md:flex items-center justify-center">
+                <div class="md:ml-6 md:block">
+                  <div class="flex space-x-4">
+                    <a href="#" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Dashboard</a>
+                    <a href="#" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Team</a>
+                    <a href="#" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Projects</a>
+                    <a href="#" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Calendar</a>
+                  </div>
+                </div>
+              </div>
+<!--                contact button-->
+              <div class="hidden md:flex items-center pr-2 md:ml-6 md:pr-0">
+                <!-- Profile dropdown -->
+                <a class="button flex items-center rounded-full bg-orange-600 text-xl text-white font-bold px-5 py-2.5">
+                    <span>Contact</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile menu -->
+          <div class="md:hidden hidden" id="mobile-menu">
+            <div class="space-y-1 px-2 pb-3 pt-2">
+              <a href="#" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Home</a>
+              <a href="#" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Team</a>
+              <a href="#" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Projects</a>
+              <a href="#" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Calendar</a>
+              <a href="#" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Contact</a>
+            </div>
+          </div>
+        </nav>
+        {% block content %}
+        {% endblock %}
+        </div>
+    </div>
+    <script>
+        const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', function () {
+            // Kiểm tra xem mobile menu đã mở hay chưa
+            const isMobileMenuOpen = mobileMenu.classList.contains('hidden');
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
