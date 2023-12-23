@@ -9,6 +9,8 @@ class UserInfo(User):
     phone = models.CharField(max_length=11)
     introduction = models.TextField()
     position = models.CharField(max_length=50)
+    avatar = models.ImageField(upload_to='images/', blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
     facebook_link = models.CharField(max_length=100, blank=True, null=True)
     linkedin_link = models.CharField(max_length=100, blank=True, null=True)
     github_link = models.CharField(max_length=100, blank=True, null=True)

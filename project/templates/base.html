@@ -29,22 +29,22 @@
                   <div class="flex flex-shrink-0 items-center">
                     <a class="flex flex-row justify-center items-center gap-2 rounded-full text-sm bold text-white">
                         <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                        <span>Ha Ngoc Hieu</span>
+                        <span>{{user_info.get_full_name}}</span>
                     </a>
                   </div>
                   <div class="w-full hidden md:flex items-center justify-center">
                     <div class="md:ml-6 md:block">
                       <div class="flex space-x-4">
-                        <a href="{% url 'home' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Home</a>
-                        <a href="{% url 'about' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">About</a>
-                        <a href="{% url 'projects' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Projects</a>
-                        <a href="{% url 'contact' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Contact</a>
+                        <a href="{% url 'app:home' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Home</a>
+                        <a href="{% url 'app:about' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">About</a>
+                        <a href="{% url 'app:projects' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Projects</a>
+                        <a href="{% url 'app:contact' %}" class="text-white hover:text-gray-300 rounded-md px-3 py-2 text-xl font-medium">Contact</a>
                       </div>
                     </div>
                   </div>
     <!--                contact button-->
                   <div class="hidden md:flex md:w-[300px] items-center">
-                    <a href="https://www.google.com.vn" class="w-full text-center rounded-full bg-orange-600 text-xl text-white font-medium px-5 py-2.5">Download CV</a>
+                    <a href="{% static 'uploads/cv.pdf' %}" download="cv.pdf" class="w-full text-center rounded-full bg-orange-600 text-xl text-white font-medium px-5 py-2.5">Download CV</a>
                   </div>
                 </div>
               </div>
@@ -52,10 +52,10 @@
           <!-- Mobile menu -->
           <div class="md:hidden hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pb-3 pt-2">
-              <a href="{% url 'home' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Home</a>
-              <a href="{% url 'about' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">About</a>
-              <a href="{% url 'projects' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Projects</a>
-              <a href="{% url 'contact' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Contact</a>
+              <a href="{% url 'app:home' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Home</a>
+              <a href="{% url 'app:about' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">About</a>
+              <a href="{% url 'app:projects' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Projects</a>
+              <a href="{% url 'app:contact' %}" class="text-white hover:text-gray-300 block px-3 py-1 text-xs font-medium">Contact</a>
             </div>
           </div>
         </nav>
