@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
-    <h1>About Page</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex flex-row justify-between gap-8 mt-10 mr-4">
+    <div class="text-white">
+        <h1 class="text-3xl font-bold">{{short_introduction}}</h1>
+        <h2 class="text-xl font-medium"></h2>
+    </div>
+    <div class="rounded-2xl">
+        <img src="../static/images/linkedin.png" alt="xxx" width="396" height="127">
+    </div>
+</div>
+{% endblock %}
