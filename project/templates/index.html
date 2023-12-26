@@ -19,41 +19,75 @@
           height={719}
           class='rounded-full'
         />
-          <div class="text-wrap" style="writing-mode: vertical-lr;">Ha Ngoc Hieu</div>
+          <div class="text-wrap" style="writing-mode: vertical-lr;">{{user_info.get_full_name}}</div>
       </div>
 </section>
 <!--Links-->
-<div class="flex justify-between items-center my-10">
-    <div>
-        <a href="https://www.dribbble">
-            <img alt="linkedin logo" src="../static/images/facebook.png" width="100">
-        </a>
-    </div>
+<section class="w-full my-20">
+    <div class="flex justify-between items-center">
         <div>
-        <a href="https://www.dribbble">
-            <img alt="linkedin logo" src="../static/images/github.png" width="100">
-        </a>
+            <a href="https://www.dribbble">
+                <img alt="linkedin logo" src="../static/images/facebook.png" width="100">
+            </a>
+        </div>
+            <div>
+            <a href="https://www.dribbble">
+                <img alt="linkedin logo" src="../static/images/github.png" width="100">
+            </a>
+        </div>
+        <div>
+            <a href="https://www.dribbble">
+                <img alt="linkedin logo" src="../static/images/linkedin.png" width="100">
+            </a>
+        </div>
     </div>
-    <div>
-        <a href="https://www.dribbble">
-            <img alt="linkedin logo" src="../static/images/linkedin.png" width="100">
-        </a>
-    </div>
-
-</div>
+</section>
 <!--Skills-->
-<section class='w-full text-white text-center'>
+<section class='w-full text-white text-center my-32'>
     <h1 class="text-3xl font-bold">My Skills</h1>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-10">
         {% for skill in skills %}
-            <div class="min-h-[200px] max-w-[350px] rounded-3xl" style="background: linear-gradient(214deg, #EA5F5F 6.04%, #EA5 92.95%);">
+            <div class="min-h-[200px] max-w-[350px] rounded-3xl hover:opacity-90" style="background: linear-gradient(214deg, #EA5F5F 6.04%, #EA5 92.95%);">
                 <div class="w-full flex flex-col justify-center items-center gap-2 p-5">
                     <img alt="{{skill.title}}" src="../static/images/linkedin.png" width="50" height="50">
                     <h2 class="w-full text-xs sm:text-xl font-bold ">{{skill.title}}</h2>
-                    <p class="w-full break-words">{{skill.description}}</p>
+                    <p class="w-full break-words text-white text-opacity-50">{{skill.description}}</p>
                 </div>
             </div>
         {% endfor %}
+    </div>
+</section>
+<!--Projects-->
+<section class="w-full text-white my-32">
+    <a href="{% url 'app:projects' %}" class="text-3xl font-bold hover:opacity-95">Recent Projects &nbsp;<i class="fa-solid fa-arrow-right-long"></i></a>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-10">
+    {% for project in project_list|slice:":3" %}
+        <div class="min-h-[200px] max-h-[250px] max-w-[350px] rounded-3xl hover:shadow-2xl hover:opacity-90" style="background: linear-gradient(214deg, #EA5F5F 6.04%, #EA5 92.95%);">
+            <a href="https://www.github.com" class="w-full min-h-[200px] h-full flex flex-col gap-2 p-6">
+                <img alt="" src="{{project.img_url}}" width="50" height="50">
+                <h2 class="w-full text-xs sm:text-xl font-bold text-nowrap overflow-x-hidden">{{project.title}}</h2>
+                <p class="w-full break-words overflow-y-hidden">
+                    {{project.description}}</p>
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+</section>
+<!--Contact-->
+<section class="w-full my-20">
+    <div class="flex flex-col justify-center items-center text-white text-center gap-6">
+        <div class="w-full text-[50px] font-bold">Let's contact for me!</div>
+        <a href="{% url 'app:contact' %}" class="italic text-2xl font-bold hover:opacity-90">
+            <i class="fa-solid fa-envelope"></i>
+            {{user.email}}
+        </a>
+<!--        <p class="w-full text-[24px] font-bold">or</p>-->
+        <div class="w-1/2 flex flex-row justify-between items-center">
+            <a href="{{user.github_url}}"><i class="text-4xl fa-brands fa-github"></i></a>
+            <a href="{{user.linkedin_url}}"><i class="text-4xl fa-brands fa-linkedin"></i></a>
+            <a href="{{user.facebook_url}}"><i class="text-4xl fa-brands fa-facebook"></i></a>
+            <a href="{{user.facebook_url}}"><i class="text-4xl fa-brands fa-twitter"></i></a>
+        </div>
     </div>
 </section>
 {% endblock %}

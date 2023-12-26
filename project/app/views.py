@@ -1,58 +1,78 @@
 import mimetypes
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import TemplateView
-from .models import UserInfo
+from django.views.generic import TemplateView, ListView
+
+from .forms import ContactForm
+from .models import UserInfo, Project, Contact
 
 
-# Create your views here.
-class IndexView(TemplateView):
-    model = UserInfo
-    template_name = 'index.html'
-    #
-    # def get(self, request, *args, **kwargs):
-    #     return render(request, self.template_name)
+class BaseView(TemplateView):
+    user = UserInfo.objects.get(username='hangochieu123')
+    object_list = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = UserInfo.objects.get(username='hangochieu123')
-        context['user_info'] = user
-        context['skills'] = user.skills.all()
-        print('test')
-        print()
+        context['user_info'] = self.user
         return context
 
 
-def contact(request):
-    return render(request, 'contact.html')
+# Create your views here.
+class IndexView(BaseView):
+    model = UserInfo
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        projects = Project.objects.all().order_by('-start_date')
+        # context['user_info'] = self.user
+        context['skills'] = self.user.skills.all()
+        context['project_list'] = projects
+        return context
 
 
-class AboutView(TemplateView):
+class ContactView(BaseView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            new_contact = Contact(name=name, email=email, message=message)
+            new_contact.save()
+            return HttpResponseRedirect("/")
+        return render(request, self.template_name, {"form": form})
+
+
+class AboutView(BaseView):
     template_name = 'about.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_info = UserInfo.objects.get(username='hangochieu123')
-        context['short_introduction'] = user_info.get_short_introduction()
+        context['short_introduction'] = self.user.get_short_introduction()
         return context
 
 
-def about(request):
-    return render(request, 'about.html')
+class ProjectsView(ListView, BaseView):
+    model = Project
+    template_name = 'projects.html'
+    # queryset = Project.objects.all()
+    # context_object_name = 'project_list'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['project_list'] = Project.objects.all()
+        # print(context['project_list'])
+        return context
 
-def project(request):
-    return render(request, 'projects.html')
+    def get_queryset(self):
+        return Project.objects.all()
 
-
-# def download_file(request):
-#     # fill these variables with real values
-#     fl_path = '../static/uploads/cd.pdf'
-#     filename = 'cv.pdf'
-#
-#     fl = open(fl_path, 'r')
-#     mime_type, _ = mimetypes.guess_type(fl_path)
-#     response = HttpResponse(fl, content_type=mime_type)
-#     response['Content-Disposition'] = "attachment; filename=%s" % filename
-#     return response
