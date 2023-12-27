@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="flex flex-row justify-between gap-8 mt-10 mr-4">
-    <div class="text-white">
-        <h1 class="text-3xl font-bold">{{short_introduction}}</h1>
-        <h2 class="text-xl font-medium"></h2>
+<div class="flex flex-row justify-between gap-x-1 mt-10 mr-4">
+    <div class="text-white w-[65%]">
+        <h1 class="w-[80%] text-3xl font-bold">{{short_introduction}}</h1>
+        <p class="w-[80%] text-xl whitespace-pre-line font-medium leading-9 my-6">{{user_info.introduction}}</p>
+        <h1 class="text-2xl font-bold mb-6 ">My Social Network:</h1>
+        <div class="w-1/2 flex flex-row justify-between items-center">
+            <a href="{{user.github_url}}"><i class="text-3xl fa-brands fa-github"></i></a>
+            <a href="{{user.linkedin_url}}"><i class="text-3xl fa-brands fa-linkedin"></i></a>
+            <a href="{{user.facebook_url}}"><i class="text-3xl fa-brands fa-facebook"></i></a>
+            <a href="{{user.facebook_url}}"><i class="text-3xl fa-brands fa-twitter"></i></a>
+        </div>
     </div>
-    <div class="rounded-2xl">
-        <img src="../static/images/linkedin.png" alt="xxx" width="396" height="127">
+    <div class="rounded-2xl rotate-3 w-[35%]">
+        <img
+            src="{{user_info.image}}"
+            class="rounded-3xl w-full max-w-[350px] max-h-[600px]"
+            alt="image">
     </div>
 </div>
 {% endblock %}

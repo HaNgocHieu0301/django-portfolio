@@ -1,13 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
-from rich.markup import Tag
+from .validators import validate_phone
 
 
 # Create your models here.
 class UserInfo(User):
     middle_name = models.CharField('middle name', max_length=50, blank=True, null=True)
     dob = models.DateField()
-    phone = models.CharField(max_length=11)
+    phone = models.CharField(max_length=15, validators=[validate_phone])
     introduction = models.TextField()
     position = models.CharField(max_length=50)
     avatar = models.ImageField(upload_to='static/images/', blank=True, null=True)
@@ -28,7 +28,7 @@ class UserInfo(User):
 
 class Skill(models.Model):
     title = models.CharField(max_length=200)
-    img_url = models.ImageField(upload_to='static/images/', blank=True)
+    img_url = models.ImageField(upload_to='static/images/', blank=True, null=True)
     description = models.TextField()
     user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, related_name='skills')
 
@@ -39,14 +39,14 @@ class Tag(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
-    start_date = models.DateField(blank=True, null=True)
+    start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     img_url = models.ImageField(upload_to='static/images/', blank=True, null=True)
     github_url = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
-
+    user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, related_name='projects')
     # tags = models.ManyToManyField(Tag, through='ProjectTag', blank=True)
+
 
 # class ProjectTag(models.Model):
 #     project = models.ForeignKey(Project, on_delete=models.CASCADE)

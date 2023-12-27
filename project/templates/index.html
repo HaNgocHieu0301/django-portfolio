@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class='w-full flex flex-row justify-between gap-16 text-white'>
-      <div class='relative flex flex-col justify-center items-start'>
+<section class='w-full flex flex-row justify-between text-white'>
+      <div class='w-[65%] relative flex flex-col justify-center items-start'>
         <h1 class='mt-10 text-[50px] font-bold'>
           <span class='whitespace-nowrap relative z-10 pr-10'>
             {{user_info.get_full_name}}
@@ -9,15 +9,16 @@
           <br />
           <span class='whitespace-nowrap relative z-10 pr-10'>{{user_info.position}}</span>
         </h1>
-        <p class='text-lg leading-8 mt-6 mb-14'>{{user_info.introduction}}</p>
+        <div class='text-lg leading-8 mt-6 mb-14 w-[95%]'>
+            <p class="whitespace-pre-line mb-6">{{user_info.introduction}}</p>
+            <a href="{% url 'app:about' %}" class="italic">Read more <i class="fa-solid fa-arrow-right-long"></i></a>
+        </div>
       </div>
-      <div class='hidden relative md:flex justify-center items-center'>
+      <div class='w-[35%] hidden relative md:flex justify-center items-center'>
         <img
-          src="https://s3-alpha-sig.figma.com/img/2794/8f91/10116e18f4a83183a0ad0b35bd366ca7?Expires=1704067200&Signature=GXdPOzTZrTlVCCxY3jZOWe9nFzqX-5zdjbfPpQJFsiXASz0sLrmMtzzLpRa2g~vduv~R6edpPgtpYVqXB2RUuVaTnrbcocX0nv~9L0D3saCKQJ7S1i4jWurvA7PySkR4Wlf~1YGHPlyz-3wuZTArCCp~OcsXQNWeGrFZErU~DgS2Zq1b5IuV2xRFF7nUH0M9xbqu7ZSKMUxAHMRXNp4TqXDx5zG5LOEwx-3CQL0F6K6yziVFIPuNfHbZ3WpG1LPOS7UTepW1nI9vKOGjSTW-ZqhNtSU3eENxwPVDUXur8PFhsVpq61aHjSZHyH2h57u-Nf5Z~XUIuU3fwYpN6cgB8g__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-          alt='shoe colletion'
-          width={513}
-          height={719}
-          class='rounded-full'
+          src="{{user_info.image}}"
+          alt='image'
+          class='w-full max-w-[350px] max-h-[600px] rounded-full'
         />
           <div class="text-wrap" style="writing-mode: vertical-lr;">{{user_info.get_full_name}}</div>
       </div>
@@ -26,18 +27,18 @@
 <section class="w-full my-20">
     <div class="flex justify-between items-center">
         <div>
-            <a href="https://www.dribbble">
-                <img alt="linkedin logo" src="../static/images/facebook.png" width="100">
+            <a href="{{user_info.facebook_link}}" target="_blank">
+                <img alt="facebook logo" src="../static/images/facebook.png" width="100">
             </a>
         </div>
             <div>
-            <a href="https://www.dribbble">
-                <img alt="linkedin logo" src="../static/images/github.png" width="100">
+            <a href="{{user_info.github_link}}" target="_blank">
+                <img alt="github logo" src="../static/images/github.png" width="100">
             </a>
         </div>
         <div>
-            <a href="https://www.dribbble">
-                <img alt="linkedin logo" src="../static/images/linkedin.png" width="100">
+            <a href="{{user_info.linkedin_link}}" target="_blank">
+                <img alt="linkedin logo" src="../static/images/linkedin%20logo.png" width="100">
             </a>
         </div>
     </div>
@@ -49,7 +50,7 @@
         {% for skill in skills %}
             <div class="min-h-[200px] max-w-[350px] rounded-3xl hover:opacity-90" style="background: linear-gradient(214deg, #EA5F5F 6.04%, #EA5 92.95%);">
                 <div class="w-full flex flex-col justify-center items-center gap-2 p-5">
-                    <img alt="{{skill.title}}" src="../static/images/linkedin.png" width="50" height="50">
+                    <img alt="{{skill.title}}" src="{{skill.img_url}}" width="50" height="50">
                     <h2 class="w-full text-xs sm:text-xl font-bold ">{{skill.title}}</h2>
                     <p class="w-full break-words text-white text-opacity-50">{{skill.description}}</p>
                 </div>
@@ -62,12 +63,13 @@
     <a href="{% url 'app:projects' %}" class="text-3xl font-bold hover:opacity-95">Recent Projects &nbsp;<i class="fa-solid fa-arrow-right-long"></i></a>
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-10">
     {% for project in project_list|slice:":3" %}
-        <div class="min-h-[200px] max-h-[250px] max-w-[350px] rounded-3xl hover:shadow-2xl hover:opacity-90" style="background: linear-gradient(214deg, #EA5F5F 6.04%, #EA5 92.95%);">
-            <a href="https://www.github.com" class="w-full min-h-[200px] h-full flex flex-col gap-2 p-6">
+        <div class="min-h-[200px] max-h-[300px] max-w-[350px] rounded-3xl hover:shadow-2xl hover:opacity-90" style="background: linear-gradient(214deg, #EA5F5F 6.04%, #EA5 92.95%);">
+            <a href="{{project.github_url}}" class="w-full min-h-[200px] h-full flex flex-col gap-2 p-6">
                 <img alt="" src="{{project.img_url}}" width="50" height="50">
-                <h2 class="w-full text-xs sm:text-xl font-bold text-nowrap overflow-x-hidden">{{project.title}}</h2>
-                <p class="w-full break-words overflow-y-hidden">
-                    {{project.description}}</p>
+                <h2 class="text-sm sm:text-xl font-bold">{{project.title}}</h2>
+                <p class="break-words overflow-y-auto whitespace-pre-line">
+                    {{project.description}}
+                </p>
             </a>
         </div>
     {% endfor %}
